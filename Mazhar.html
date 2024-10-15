@@ -28,6 +28,9 @@
         .form-group {
             margin-bottom: 10px;
         }
+ .form-group1 {
+            margin-bottom: 10px;
+        }
         .form-row {
             display: flex;
             justify-content: space-between;
@@ -36,11 +39,26 @@
             display: block;
             margin-bottom: 5px;
         }
+.form-group1 label {
+            display: block;
+            margin-bottom: 5px;
+        }
         .form-group input {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
         }
+    .form-group1 input {
+            width: 50%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+.form-group1 {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+
         .form-group {
             flex: 1;
             margin-left: 10px;
@@ -78,8 +96,16 @@
             display: flex;
             margin-bottom: 15px;
         }
+.checkbox-group1 {
+            display: flex;
+            margin-bottom: 15px;
+        }
         .checkbox-group label {
           font-size: 11px;
+         
+        }
+.checkbox-group1 label {
+          font-size: 14px;
          
         }
         .high-reading {
@@ -102,9 +128,10 @@
             margin-top: 5px;
         }
         th, td {
-            padding: 5px;
+            padding: 4px;
             border: 1px solid #ccc;
             text-align: center;
+         
         }
         th {
             background-color: lightgreen; /* Light green header */
@@ -133,7 +160,7 @@ th{
                 background-color: lightgreen; /* Retain light green header in print */
                 color: black; /* Black text for header in print */
             }
-            .form-group, .checkbox-group, button {
+            .form-group, .form-group1, .checkbox-group, .checkbox-group1, button {
                 display: none; /* Hide form inputs and buttons when printing */
             }
             h2 {
@@ -143,9 +170,17 @@ th{
 .no-print{ display: none;
 }
         }
+
+
+    h3.total-cost, h3.pol {
+        margin: 5px 0; /* Adjust the top and bottom margin */
+    }
+
+
     </style>
 </head>
 <body>
+
     <div class="container">
         <h2 style="color:purple;">بژمێری یەکەی بەکارهێنراوی ووزەی کارەبا</h2>
 
@@ -166,12 +201,38 @@ th{
                 <label for="lastReading">کۆتا خوێندنەوە</label>
                 <input type="number" id="lastReading" placeholder="کۆتا خوێندنەوە بنوسە" required>
             </div>
+
             <div class="form-group">
                 <label for="lastDate">کۆتا بەروار</label>
                 <input type="date" id="lastDate" required>
             </div>
+
+
+            </div>
+  <div class="form-row">
+            <div class="form-group1">
+
+
+                 <label for="hawkolka" style="color:DeepPink;font-weight:bold;">هاوکۆلکە</label>
+                <input type="number" id="hawkolka" value="1">
+            </div>
+
+
+
+</div>
+
+
+<div class="checkbox-group1">
+
+
+       <input type="checkbox" id="zyan"/>
+            <label for="zyan" style="color:DeepPink;font-weight:bold;">زیانی گۆڕەر</label>
+</div>
+
         
-             </div>
+            
+
+
         <div class="checkbox-group">
 
        <input type="checkbox" id="mallan" onclick="onlyOne(this)") />
@@ -236,7 +297,8 @@ function onlyOne(checkbox) {
             const prevReading = parseFloat(document.getElementById('previousReading').value);
             const lastReading = parseFloat(document.getElementById('lastReading').value);
             const prevDate = new Date(document.getElementById('previousDate').value);
-            const lastDate = new Date(document.getElementById('lastDate').value);              
+            const lastDate = new Date(document.getElementById('lastDate').value);     
+            const hawkolka = parseFloat(document.getElementById('hawkolka').value);        
             const isMallan = document.getElementById('mallan').checked;
            
             const isDukan = document.getElementById('dukan').checked;
@@ -244,6 +306,7 @@ function onlyOne(checkbox) {
             const isMery = document.getElementById('mery').checked;
             const isPeshasazy = document.getElementById('peshasazy').checked;
             const isPeshasazy_1 = document.getElementById('peshasazy_1').checked;
+            const isZyan = document.getElementById('zyan').checked;
             const errorDiv = document.getElementById('error');
             const resultDiv = document.getElementById('result');
 
@@ -288,11 +351,29 @@ if (prevReading<0 || lastReading<0) {
             // New condition for readings crossing 99999
             let consumedUnits;
             if (prevReading >= 70000 && prevReading <= 99999 && lastReading <= 40000 && lastReading >= 1 && !(prevReading<1 || lastReading<1)) {
-                consumedUnits = lastReading + 99999 - prevReading;
+                consumedUnits = (lastReading + 99999 - prevReading) * hawkolka;
                 resultDiv.innerHTML += "<p class='high-reading'>اکمال دەورە.</p>";
-            } else {
-                consumedUnits = lastReading - prevReading;
+ 
+
+
+ }
+
+
+
+else {
+                consumedUnits = (lastReading - prevReading)*hawkolka;
             }
+if(isZyan)   
+{
+
+consumedUnits += consumedUnits * 0.025;
+
+}
+
+            
+            
+
+
 
             const days = (lastDate - prevDate) / (1000 * 3600 * 24); // convert milliseconds to days
 
@@ -321,17 +402,24 @@ if (prevReading<0 || lastReading<0)
 
             let totalCost = 0;
             let resultString = `<p class="high-reading">یەکەی بەکارهێنراو :  ${formatNumber(consumedUnits)} یەکەیە لە ماوەی ${days} ڕوژدا = ${(days/30.44).toFixed(3)} مانگ = ${(days/365.25).toFixed(3)} ساڵ</p>`;
+
+
             let enteredValuesTable = `
                 <table>
                     <tr><th>خوێندنەوەی پێشوو</th><td>${formatNumber(prevReading)}</td></tr>
-                    <tr><th>بەرواری پێشوو</th><td>${`${String(prevDate.getDate()).padStart(2, '0')}-${String(prevDate.getMonth() + 1).padStart(2, '0')}-${prevDate.getFullYear()}`}
-</td></tr>
+                    <tr><th>بەرواری پێشوو</th><td>${`${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}-${String(prevDate.getDate()).padStart(2, '0')}`}</td></tr>
                     <tr><th>کۆتا خوێندنەوە</th><td>${formatNumber(lastReading)}</td></tr>
-                    <tr><th>کۆتا بەروار</th><td>${`${String(lastDate.getDate()).padStart(2, '0')}-${String(lastDate.getMonth() + 1).padStart(2, '0')}-${lastDate.getFullYear()}`}
-</td></tr>
+                    <tr><th>کۆتا بەروار</th><td>${`${lastDate.getFullYear()}-${String(lastDate.getMonth() + 1).padStart(2, '0')}-${String(lastDate.getDate()).padStart(2, '0')}`}</td></tr>
+      <tr><th>هاوکۆلکە</th><td>${formatNumber(hawkolka)}</td></tr>
                 </table>
             `;
-            let breakdownTable = `<table><tr><th>پۆلێنی نرخەکان</th><th>یەکەی بەکار هاتو</th><th>نرخ</th></tr>`;
+if(isZyan)
+{
+
+resultDiv.innerHTML += `<h4 class="pol" style="margin: 5px 0;">زیانی گۆڕەر هەیە.</h4>`;
+}
+
+            let breakdownTable = `<table><tr><th>پۆلێنی نرخەکان</th><th>یەکەی بەکار هاتوو</th><th>نرخ</th></tr>`;
 
 
 
@@ -414,7 +502,14 @@ resultDiv.innerHTML += `<h3 class="pol">پیشەسازی (Kv 0.416)</h3>`;
                 resultDiv.innerHTML += `<h3 class="total-cost">وردە: ${formatNumber(difference)} دینار.</h3>`;
                 return;
             }
+
+
+
+
+
 if (isPeshasazy_1) {
+
+
                 const peshasazyCost_1 = consumedUnits * 120;
                 totalCost += peshasazyCost_1;
                 breakdownTable += `<tr><td>120</td><td>${formatNumber(consumedUnits)}</td><td>${formatNumber(Math.floor(peshasazyCost_1))}</td></tr>`;
@@ -433,6 +528,14 @@ resultDiv.innerHTML += `<h3 class="pol">پیشەسازی (Kv 132,33,11)</h3>`;
                 resultDiv.innerHTML += `<h3 class="total-cost">وردە: ${formatNumber(difference)} دینار.</h3>`;
                 return;
             }
+
+
+
+
+
+
+
+
 
 
 
@@ -467,11 +570,11 @@ if(isMallan)
             const difference = originalTotalCost - roundedTotalCost;
 
             // Display the original total cost, rounded total cost, and the difference
- resultDiv.innerHTML += `<h3 class="pol">ماڵ</h3>`;
 
-            resultDiv.innerHTML += `<h3 class="total-cost">کۆی گشتی نرخی بنەڕەتی: ${formatNumber(originalTotalCost)} دینار.</h3>`;
-            resultDiv.innerHTML += `<h3 class="total-cost"> کۆی گشتی پوختەی نرخ: ${formatNumber(roundedTotalCost)} دینار.</h3>`;
-            resultDiv.innerHTML += `<h3 class="total-cost">وردە: ${formatNumber(difference)} دینار.</h3>`;
+           resultDiv.innerHTML += `<h3 class="pol" style="margin: 5px 0;">ماڵ</h3>`;
+resultDiv.innerHTML += `<h3 class="total-cost" style="margin: 5px 0;">کۆی گشتی نرخی بنەڕەتی: ${formatNumber(originalTotalCost)} دینار.</h3>`;
+resultDiv.innerHTML += `<h3 class="total-cost" style="margin: 5px 0;">کۆی گشتی پوختەی نرخ: ${formatNumber(roundedTotalCost)} دینار.</h3>`;
+resultDiv.innerHTML += `<h3 class="total-cost" style="margin: 5px 0;">وردە: ${formatNumber(difference)} دینار.</h3>`;
     return;
 }
 }
