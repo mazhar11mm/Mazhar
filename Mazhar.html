@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بژمێری یەکەی بەکارهێنراوی ووزەی کارەبا</title>
     <style>
+
+
         body {
             font-family: Arial, sans-serif;
-            background-color:darkblue;
+            background-color: darkblue;
             padding: 10px;
             color: white;
         }
@@ -76,16 +78,16 @@
             display: block;
             width: 100%;
             padding: 10px;
-            background-color:darkblue;
+            background-color:#5e005f;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             margin-top: 10px;
         }
         button:hover {
-            background-color:darkblue;
+            background-color:#9F2B68;
         }
         .error {
             color: red;
@@ -104,7 +106,7 @@
           font-size: 11px;
          
         }
-.checkbox-group1 label {
+        .checkbox-group1 label {
           font-size: 14px;
          
         }
@@ -112,8 +114,11 @@
             color: red;
             font-weight: bold;
         }
-        .consumed-units {
+
+        
+        .consumed-units1 {
             color: red;
+            font-weight: bold;
         }
         .total-cost {
             color: green;
@@ -137,60 +142,139 @@
             background-color: lightgreen; /* Light green header */
             color: black; /* Black text for header */
         }
-        
-        /* Print Styles */
-        @media print {
-            body {
-                color: black;
-                background-color: white;
-            }
-th{
-                background-color: lightgreen !important;
-                -webkit-print-color-adjust: exact; /* Ensures color is retained during print */
 
-}
-            .container {
-                box-shadow: none;
-            }
-            .high-reading, .consumed-units {
-                color: red;
-             /* Retain colored texts */
-            }
-            th {
-                background-color: lightgreen; /* Retain light green header in print */
-                color: black; /* Black text for header in print */
-            }
-            .form-group, .form-group1, .checkbox-group, .checkbox-group1, button {
-                display: none; /* Hide form inputs and buttons when printing */
-            }
-            h2 {
-                display: block; /* Ensure the heading is visible in print */
-                color: black;
-            }
-.no-print{ display: none;
-}
+ .textfield-group {
+            display: flex;
+            justify-content: space-between; /* Space between text fields */
         }
 
+        .textfield-group input {
+            width: 60%; /* Adjust the width to ensure three fit in one row */
+            padding: 5px;
+            margin: 2px;
+            box-sizing: border-box; /* Makes sure padding is included in width */
+        }
+
+        .textfield-group + .textfield-group {
+            margin-top: 2px; /* Space between the two rows of text fields */
+        }
+
+
+
+h4.no-print {
+    margin: 10px 0; /* Adjust the values as needed */
+  }
+
+       
+
+ 
+
+        /* Print Styles */
+@media print {
+
+    body {
+        color: black;
+        background-color: white;
+    }
+
+    th {
+        background-color: lightgreen !important;
+        -webkit-print-color-adjust: exact; /* Ensures color is retained during print */
+    }
+
+    .container {
+        box-shadow: none;
+    }
+
+  .high-reading {
+        color: red; /* Retain colored texts */
+        margin: 0;
+    }
+.consumed-units1 {
+        color: red; /* Retain colored texts */
+        margin: 10px;
+    }
+
+
+
+
+
+    th {
+        background-color: lightgreen; /* Retain light green header in print */
+        color: black; /* Black text for header in print */
+    }
+
+   
+
+    .form-group,
+    .form-group1,
+    .checkbox-group,
+    .checkbox-group1,
+    .textfield-group,
+    button {
+        display: none; /* Hide form inputs and buttons when printing */
+    }
+
+    h2 {
+        display: block; /* Ensure the heading is visible in print */
+        color: black;
+    }
+
+    .no-print {
+        display: none;
+    }
+}
 
     h3.total-cost, h3.pol {
         margin: 5px 0; /* Adjust the top and bottom margin */
     }
 
 
+        h3 {
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2 style="color:purple;">بژمێری یەکەی بەکارهێنراوی ووزەی کارەبا</h2>
+<h3 style="text-align: center; color: purple; font-weight: bold;">
+    بژمێری یەکەی بەکارهێنراوی ووزەی کارەبا
+</h3>
+       
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="previousReading">خوێندنەوەی پێشوو</label>
+<div class="textfield-group">
+
+        <input type="text" id="naw" placeholder="ناو">
+  
+<input type="number" id="zh_hazhmar" placeholder="ژمارەی هەژمار" maxlength="11" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" />
+        
+
+    </div>
+    <div class="textfield-group">
+        
+<input type="number" id="zh_pewar" placeholder="ژمارەی پێوەر">
+<input type="number" id="zh_hawbash" placeholder="ژمارەی هاوبەش">
+</div>
+    <div class="textfield-group">
+        <input type="text" id="block" placeholder="بلۆک/ زنجیرە">
+ <input type="text" id="address" placeholder="ناونیشان">       
+
+<input type="number" id="pol" placeholder="پۆل">
+        
+    
+    </div>
+
+ <div class="form-row">
+ <div class="form-group">
+
+       <label for="previousReading" style="color: #E0115F; font-weight: bold;">خوێندنەوەی پێشوو :</label>
                 <input type="number" id="previousReading" placeholder="خوێندنەوەی پێشوو بنوسە" required>
             </div>
             <div class="form-group">
-                <label for="previousDate">بەرواری پێشوو</label>
+                <label for="previousDate" style="color: #E0115F; font-weight: bold;">بەرواری پێشوو :</label>
                 <input type="date" id="previousDate" required>
           
   </div>
@@ -198,17 +282,16 @@ th{
 
         <div class="form-row">
             <div class="form-group">
-                <label for="lastReading">کۆتا خوێندنەوە</label>
+                <label for="lastReading" style="color: #E0115F; font-weight: bold;">کۆتا خوێندنەوە :</label>
                 <input type="number" id="lastReading" placeholder="کۆتا خوێندنەوە بنوسە" required>
             </div>
 
             <div class="form-group">
-                <label for="lastDate">کۆتا بەروار</label>
-                <input type="date" id="lastDate" required>
+                <label for="lastDate" style="color: #E0115F; font-weight: bold;">کۆتا بەروار :</label>
+        <input type="date" id="lastDate" required>
             </div>
 
-
-            </div>
+           </div>
   <div class="form-row">
             <div class="form-group1">
 
@@ -293,7 +376,19 @@ function onlyOne(checkbox) {
         function calculateCost() 
 {
 
-    
+             const naw = document.getElementById('naw').value;
+
+             const zh_hazhmar = document.getElementById('zh_hazhmar').value;    
+
+             const zh_hawbash = document.getElementById('zh_hawbash').value;    
+             const zh_pewar = document.getElementById('zh_pewar').value;    
+             const pol = document.getElementById('pol').value;    
+              
+             const nawnishan = document.getElementById('address').value;
+ 
+            const znjira = document.getElementById('block').value;
+
+
             const prevReading = parseFloat(document.getElementById('previousReading').value);
             const lastReading = parseFloat(document.getElementById('lastReading').value);
             const prevDate = new Date(document.getElementById('previousDate').value);
@@ -324,7 +419,7 @@ if (prevReading<0 || lastReading<0) {
 
  
  // Validation: Check if the last reading is less than the previous reading
-            if (lastReading < prevReading && !(prevReading >= 70000 && prevReading <= 99999 && lastReading <= 40000 && lastReading >=1)) {
+            if (lastReading < prevReading && !(prevReading >= 70000 && prevReading <= 99999 && lastReading <= 40000 && lastReading >=1 || prevReading >= 970000 && prevReading <= 999999 && lastReading <= 40000 && lastReading >=1)) {
                errorDiv.innerHTML = 'خوێندنەوەی ئێستا نابێت کەمتر بێت لە خوێندنەوەی  پێشوو چونکە یەکەی بەکارهێنراو سالب دەبێت.';
               return;
            }
@@ -348,15 +443,25 @@ if (prevReading<0 || lastReading<0) {
     
 
            
-            // New condition for readings crossing 99999
+            // New condition for readings crossing 99999 & 999999
             let consumedUnits;
-            if (prevReading >= 70000 && prevReading <= 99999 && lastReading <= 40000 && lastReading >= 1 && !(prevReading<1 || lastReading<1)) {
+            if (prevReading >= 70000 && prevReading <= 99999 && lastReading <= 40000 && lastReading >= 1 && !(prevReading<1 || lastReading<1)) 
+
+{
                 consumedUnits = (lastReading + 99999 - prevReading) * hawkolka;
+                resultDiv.innerHTML += "<p class='high-reading'>اکمال دەورە.</p>";
+ 
+
+}
+ 
+else if (prevReading >= 970000 && prevReading <= 999999 && lastReading <= 40000 && lastReading >= 1 && !(prevReading<1 || lastReading<1)) {
+                consumedUnits = (lastReading + 999999 - prevReading) * hawkolka;
                 resultDiv.innerHTML += "<p class='high-reading'>اکمال دەورە.</p>";
  
 
 
  }
+
 
 
 
@@ -401,10 +506,26 @@ if (prevReading<0 || lastReading<0)
 
 
             let totalCost = 0;
-            let resultString = `<p class="high-reading">یەکەی بەکارهێنراو :  ${formatNumber(consumedUnits)} یەکەیە لە ماوەی ${days} ڕوژدا = ${(days/30.44).toFixed(3)} مانگ = ${(days/365.25).toFixed(3)} ساڵ</p>`;
+            let resultString = `<p class="consumed-units1">یەکەی بەکارهێنراو :  ${formatNumber(consumedUnits)} یەکەیە لە ماوەی ${days} ڕۆژدا = ${(days/30.44).toFixed(3)} مانگ = ${(days/365.25).toFixed(3)} ساڵ</p>`;
 
+let enteredValuesTable1 = `
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; width: 100%;">
+        <div style="flex-basis: 45%;">
+            ناو: ${naw}<br>
+            ژ.هەژمار: ${zh_hazhmar}<br>
+           ژ.پێوەر: ${zh_pewar}<br>
+ژ.هاوبەش: ${zh_hawbash}<br>
+        </div>
+        <div style="flex-basis: 45%;">
 
-            let enteredValuesTable = `
+            بلۆک: ${znjira}<br>
+            ناونیشان: ${nawnishan}<br>
+            پۆل: ${pol}<br>
+        </div>
+    </div>
+`;
+
+let enteredValuesTable = `
                 <table>
                     <tr><th>خوێندنەوەی پێشوو</th><td>${formatNumber(prevReading)}</td></tr>
                     <tr><th>بەرواری پێشوو</th><td>${`${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}-${String(prevDate.getDate()).padStart(2, '0')}`}</td></tr>
@@ -413,10 +534,14 @@ if (prevReading<0 || lastReading<0)
       <tr><th>هاوکۆلکە</th><td>${formatNumber(hawkolka)}</td></tr>
                 </table>
             `;
+
+
+            
+
 if(isZyan)
 {
 
-resultDiv.innerHTML += `<h4 class="pol" style="margin: 5px 0;">زیانی گۆڕەر هەیە.</h4>`;
+resultDiv.innerHTML += `<h4 class="pol" style="margin: 2px 0;">زیانی گۆڕەر هەیە.</h4>`;
 }
 
             let breakdownTable = `<table><tr><th>پۆلێنی نرخەکان</th><th>یەکەی بەکار هاتوو</th><th>نرخ</th></tr>`;
@@ -561,6 +686,7 @@ if(isMallan)
             }
 
             breakdownTable += `</table>`;
+             resultDiv.innerHTML += enteredValuesTable1;
             resultDiv.innerHTML += enteredValuesTable;
             resultDiv.innerHTML += resultString;
             resultDiv.innerHTML += breakdownTable;
@@ -579,11 +705,11 @@ resultDiv.innerHTML += `<h3 class="total-cost" style="margin: 5px 0;">وردە: 
 }
 }
 
-        // Print the result and table, excluding form elements
+       // Print the result and table, excluding form elements
         function printResults() {
             const originalContents = document.body.innerHTML;
             const printContents = document.querySelector('.result').innerHTML;
-            const titleContents = document.querySelector('h2').outerHTML;
+            const titleContents = document.querySelector('h3').outerHTML;
             const containerStyles = document.querySelector('.container').getAttribute('style');
             
             document.body.innerHTML = `<div class="container" style="${containerStyles}">${titleContents}${printContents}</div>`;
